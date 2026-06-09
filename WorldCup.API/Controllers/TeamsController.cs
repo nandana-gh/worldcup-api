@@ -83,5 +83,20 @@ namespace WorldCup.API.Controllers
                 return BadRequest(new { Message = ex.Message });
             }
         }
+
+        [HttpPut("{id}/activate")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Activate(int id)
+        {
+            try
+            {
+                await _teamService.ActivateTeamAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
     }
 }

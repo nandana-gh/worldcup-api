@@ -10,5 +10,6 @@ namespace WorldCup.API.Services
         Task<TeamDto> CreateTeamAsync(CreateTeamDto request);
         Task UpdateTeamAsync(int id, UpdateTeamDto request);
         Task DeleteTeamAsync(int id);
+        Task ActivateTeamAsync(int id);
     }
 }

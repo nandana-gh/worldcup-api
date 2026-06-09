@@ -76,5 +76,15 @@ namespace WorldCup.API.Services
             _teamRepository.Update(team);
             await _teamRepository.SaveChangesAsync();
         }
+
+        public async Task ActivateTeamAsync(int id)
+        {
+            var team = await _teamRepository.GetByIdAsync(id);
+            if (team == null) throw new Exception("Team not found.");
+
+            team.IsActive = true;
+            _teamRepository.Update(team);
+            await _teamRepository.SaveChangesAsync();
+        }
     }
 }

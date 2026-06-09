@@ -36,9 +36,10 @@ namespace WorldCup.API.Services
             var polls = await _pollRepository.GetAllAsync();
             var totalVotes = polls.Count();
 
-            var teams = await _teamRepository.GetAllAsync();
+            var allTeams = await _teamRepository.GetAllAsync();
+            var activeTeams = allTeams.Where(t => t.IsActive).ToList();
 
-            var results = teams.Select(t => {
+            var results = activeTeams.Select(t => {
                 var voteCount = polls.Count(p => p.TeamId == t.TeamId);
                 return new PollResultDto
                 {

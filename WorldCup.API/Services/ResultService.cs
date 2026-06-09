@@ -87,7 +87,17 @@ namespace WorldCup.API.Services
         public async Task<IEnumerable<PollDto>> GetAllPollsAsync()
         {
             var polls = await _pollRepository.GetAllAsync();
-            return polls.Select(p => new PollDto { PollId = p.PollId, UserId = p.UserId, TeamId = p.TeamId, VotedAt = p.VotedAt });
+            var users = await _userRepository.GetAllAsync();
+            var teams = await _teamRepository.GetAllAsync();
+
+            return polls.Select(p => new PollDto { 
+                PollId = p.PollId, 
+                UserId = p.UserId, 
+                TeamId = p.TeamId, 
+                VotedAt = DateTime.SpecifyKind(p.VotedAt, DateTimeKind.Utc),
+                UserName = users.FirstOrDefault(u => u.UserId == p.UserId)?.Name ?? "Unknown",
+                TeamName = teams.FirstOrDefault(t => t.TeamId == p.TeamId)?.TeamName ?? "Unknown"
+            }).OrderByDescending(p => p.VotedAt).ToList();
         }
     }
 }

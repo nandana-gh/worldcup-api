@@ -21,6 +21,18 @@ namespace WorldCup.API.Data
                 context.Users.Add(admin);
             }
 
+            if (!context.Teams.Any())
+            {
+                var teams = new List<Team>
+                {
+                    new Team { TeamName = "Argentina", TeamCode = "ARG", GroupName = "A", FlagImageUrl = "https://flagcdn.com/w320/ar.png", Description = "Defending Champions", IsActive = true, CreatedAt = DateTime.UtcNow },
+                    new Team { TeamName = "Brazil", TeamCode = "BRA", GroupName = "G", FlagImageUrl = "https://flagcdn.com/w320/br.png", Description = "Five-time champions", IsActive = true, CreatedAt = DateTime.UtcNow },
+                    new Team { TeamName = "France", TeamCode = "FRA", GroupName = "D", FlagImageUrl = "https://flagcdn.com/w320/fr.png", Description = "2018 Champions", IsActive = true, CreatedAt = DateTime.UtcNow },
+                    new Team { TeamName = "Germany", TeamCode = "GER", GroupName = "E", FlagImageUrl = "https://flagcdn.com/w320/de.png", Description = "Four-time champions", IsActive = true, CreatedAt = DateTime.UtcNow }
+                };
+                context.Teams.AddRange(teams);
+            }
+
             if (!context.SystemSettings.Any())
             {
                 context.SystemSettings.Add(new SystemSetting

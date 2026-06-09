@@ -8,7 +8,7 @@ namespace WorldCup.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     public class PollsController : ControllerBase
     {
         private readonly IPollService _pollService;
@@ -19,6 +19,7 @@ namespace WorldCup.API.Controllers
         }
 
         [HttpPost("vote")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> Vote([FromBody] VoteDto request)
         {
             try
@@ -34,6 +35,7 @@ namespace WorldCup.API.Controllers
         }
 
         [HttpGet("my-vote")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetMyVote()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);

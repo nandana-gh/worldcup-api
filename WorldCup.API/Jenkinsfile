@@ -14,8 +14,10 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                // Building the image locally to verify Compilation and Dockerfile logic
-                bat 'docker build -t %IMAGE_NAME%:%BUILD_ID% .'
+                dir('WorldCup.API') {
+                    // Building the image locally to verify Compilation and Dockerfile logic
+                    bat 'docker build -t %IMAGE_NAME%:%BUILD_ID% .'
+                }
             }
         }
     }
